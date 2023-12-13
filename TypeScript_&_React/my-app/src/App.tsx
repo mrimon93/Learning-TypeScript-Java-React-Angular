@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
 import './App.css';
 import InputFeild from './components/InputFeild';
-
+import { ToDo } from "./model";
 // // Video: https://www.youtube.com/watch?v=FJDVKeh7RJI
 
 
 //Functional Component 17.30 Min
+//App: React.ReactNode -- Takes in everything 
 const App:React.FC = () => {
 //Usestate (24 Min)
-   const [todo, setTodo] = useState<string>("");
-  // const [todos, setTodos] = useState<Array<Todo>>([]);
+   const [todo, setTodo] = useState<string>(""); //Creating our first state giving thE state a type  (multiple type 27 Min)
+  const [todos, setTodos] = useState<Array<ToDo>>([]); //Store the values 
   // const [CompletedTodos, setCompletedTodos] = useState<Array<Todo>>([]);
+
+  const handleAdd = (e: React.FormEvent) => {
+    e.preventDefault(); //Getting error because e is implicity any type 33 min
+    
+    if (todo) {
+      setTodos([...todos, { id: Date.now(), todo, isDone: false }]);
+      setTodo(""); //Empty the field
+    } //36 Min
+
+  };
 
 
   return (
     <div className="App">
       <span className='heading'> Taskify</span>
-      <InputFeild todo={todo} setTodo={setTodo} />
+      <InputFeild todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
     </div>
   );
 }
